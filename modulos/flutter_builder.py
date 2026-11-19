@@ -35,8 +35,7 @@ class FlutterBuilder:
             "build",
             "apk",
             "--release",
-            "--target-platform", "android-arm64",
-            "--split-debug-info=build/symbols"
+            "--target-platform", "android-arm64"            
         ]     
 
         print("Iniciando compilación Flutter...\n")

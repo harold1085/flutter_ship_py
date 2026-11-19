@@ -1,0 +1,8 @@
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]

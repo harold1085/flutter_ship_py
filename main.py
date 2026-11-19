@@ -1,10 +1,10 @@
-from modulos.flutter_builder import FlutterBuilder
-from modulos.version_manager import VersionManager
+from modulos.supabase_manager import SupabaseManager
 
-def main():
-    version_manager = VersionManager()
-    resultado = version_manager.Obtener_mas_reciente()
+supabase = SupabaseManager()
 
-    if resultado is not None:
-        version = resultado["version"]
+resultado = supabase.probar_conexion()
 
+if resultado:
+    print("\nSupabase Storage esta funcionando")
+else:
+    print("\nNo se pudo conetar ")  

@@ -15,7 +15,7 @@ class versionManager:
         archivos_apk= [
             archivo 
             for archivo in self.carpeta_versiones.iterdir()
-            if archivo.is_file() and archivo.suflix.lower() == ".apk"
+            if archivo.is_file() and archivo.suffix.lower() == ".apk"
         ]
 
         if not archivos_apk:
@@ -24,7 +24,7 @@ class versionManager:
 
         apk_reciente = max(archivos_apk,key=lambda archivo: archivo.stat().st_mtime)
 
-        fecha=datetime.fromtimestamp(apk_reciente.stat().st_mtime)
+        fecha = datetime.fromtimestamp(apk_reciente.stat().st_mtime)
 
         #regex : busqueda y extraccion version mas reciente
         patron = r"_v(\d+)\.(\d+)\.(\d+)(?=\.apk)"
@@ -42,3 +42,17 @@ class versionManager:
 
         return {"version": version}
 
+    #funcion para evitar duplicados
+    def existe_version(self, mayor,menor,parche):
+        
+        if not self.carpeta_versiones.exists():
+                    raise FileNotFoundError("La carpeta de versiones no existe.")
+        
+        version_buscada = f"_v{mayor}.{menor}.{parche}"
+
+        for archivo in self.carpeta_versiones.iterdir():
+            if archivo.is_file() and archivo.suffix.lower == ".apk":
+                if archivo.stem.lower().endwith(version_buscada.lower()):
+                    return True
+
+        return False
