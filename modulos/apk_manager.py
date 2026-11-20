@@ -1,4 +1,3 @@
-
 import shutil
 from pathlib import Path
 
@@ -9,7 +8,6 @@ class APKManager:
 
         self.destination_folder = Path(destination_folder)
 
-        # Crear carpeta de destino si no existe
         self.destination_folder.mkdir(
             parents=True,
             exist_ok=True
@@ -24,12 +22,15 @@ class APKManager:
                 f"No se encontró el APK: {apk_path}"
             )
 
-        # Nombre final del APK
-        new_filename = f"{app_name}-v{version}.apk"
+        new_filename = f"{app_name}_v{version}.apk"
 
         destination_path = self.destination_folder / new_filename
 
-        # Copiar y renombrar APK
+        if destination_path.exists():
+            raise FileExistsError(
+                f"Ya existe un APK con esta versión: {destination_path}"
+            )
+
         shutil.copy2(
             apk_path,
             destination_path

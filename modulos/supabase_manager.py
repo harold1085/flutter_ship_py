@@ -21,10 +21,7 @@ class SupabaseManager:
         self.supabase_url = os.getenv("SUPABASE_URL")
         self.supabase_key = os.getenv("SUPABASE_KEY")
         self.bucket_name = os.getenv("SUPABASE_BUCKET")
-
-        print("URL:", repr(self.supabase_url))
-        print("Longitud URL:", len(self.supabase_url))
-
+        
         if not self.supabase_url:
             raise ValueError("Falta SUPABASE_URL")
 
@@ -33,6 +30,9 @@ class SupabaseManager:
 
         if not self.bucket_name:
             raise ValueError("Falta SUPABASE_BUCKET")
+
+        print("URL:", self.supabase_url)
+        print("Longitud URL:", len(self.supabase_url))
 
         # Crear cliente Supabase
         self.supabase = create_client(
@@ -58,3 +58,41 @@ class SupabaseManager:
             print(f"Error de conexión: {error}")
 
             return False
+
+    def subir_apk(self, apk_path):
+
+        apk_path = Path(apk_path)
+
+        if not apk_path.is_file():
+            raise FileNotFoundError(
+                f"No se encontró el APK: {apk_path}"
+            )
+
+        # Nombre directo del archivo en el bucket
+        remote_path = apk_path.name
+
+        try:
+
+            with apk_path.open("rb") as apk_file:
+
+                response = self.supabase.storage \
+                    .from_(self.bucket_name) \
+                    .upload(
+                        path=remote_path,
+                        file=apk_file,
+                        file_options={
+                            "content-type": "application/vnd.android.package-archive",
+                            "upsert": "false"
+                        }
+                    )
+
+            print("\nAPK subido correctamente.")
+            print(f"Bucket: {self.bucket_name}")
+            print(f"Archivo remoto: {remote_path}")
+
+            return response
+
+        except Exception as error:
+
+            print(f"Error al subir APK: {error}")
+            raise
