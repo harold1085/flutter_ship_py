@@ -1,30 +1,34 @@
-from modulos.apk_manager import APKManager
-from modulos.supabase_manager import SupabaseManager
-from pathlib import Path
 
-def main():
+import logging
 
-    apk_manager = APKManager(r"C:\MisCredencialesFlutter\versiones")
-    # preparacion del apk
-    apk_preparado = apk_manager.prepare_apk(
-        apk_path=Path(r"C:\Proyectos\mi_app_flutter\build\app\outputs\flutter-apk\app-release.apk"),
-        app_name="AnamariaGarden",
-        version="1.0.0"
-    )
+import flet as ft
 
-    # conexion a supabse
-    supabase_manager = SupabaseManager()
+from views.release import build_release_screen
 
-    # Comprobacion de  conexión
-    if not supabase_manager.probar_conexion():
-        print("No fue posible conectar con Supabase.")
-        return
 
-    # se sube a supabase storage
-    supabase_manager.subir_apk(
-        apk_path=apk_preparado
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+)
+
+
+def main(page: ft.Page):
+
+    # Configuración de la ventana
+    page.title = "Flutter Ship - APK Release Manager"
+    page.theme_mode = ft.ThemeMode.LIGHT
+    page.bgcolor = ft.Colors.BLUE_GREY_50
+
+    page.window.width = 900
+    page.window.height = 750
+    page.window.min_width = 650
+    page.window.min_height = 600
+
+    # Mostrar pantalla principal
+    page.add(
+        build_release_screen(page)
     )
 
 
 if __name__ == "__main__":
-    main()
+    ft.run(main)
