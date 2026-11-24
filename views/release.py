@@ -325,13 +325,23 @@ def build_release_screen(page: ft.Page):
                 ft.Column(
                     spacing=6,
                     controls=[
-                        ft.Text(
-                            "FLUTTER SHIP",
-                            size=28,
-                            weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.BLUE_GREY_900,
+                    ft.Row(
+                        spacing=12,
+                        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                        controls=[
+                            ft.Image(
+                                src="icon.svg",
+                                width=48,
+                                height=48,
+                            ),
+                            ft.Text(
+                                "FLUTTER SHIP",
+                                size=28,
+                                weight=ft.FontWeight.BOLD,
+                                color=ft.Colors.BLUE_GREY_900,
+                                    ),
+                            ],
                         ),
-
                         ft.Text(
                             "Compila, versiona y publica tu release de Flutter.",
                             size=14,
