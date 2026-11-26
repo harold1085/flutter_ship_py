@@ -84,7 +84,27 @@ def build_release_screen(page: ft.Page):
             color=ft.Colors.BLUE_GREY_600
         ),
         expand=True,
+    )    
+    
+    tipo_actualizacion_field = ft.Dropdown(
+        label="Tipo de actualización",
+        value="opcional",
+        options=[
+            ft.dropdown.Option(
+                key="obligatoria",
+                text="Obligatoria",
+            ),
+            ft.dropdown.Option(
+                key="opcional",
+                text="Opcional",
+            ),
+        ],
+        border_color=ft.Colors.BLUE_GREY_300,
+        focused_border_color=ft.Colors.BLUE_GREY_600,
+        color=ft.Colors.BLUE_GREY_900,
+        expand=True,
     )
+
 
     latest_text = ft.Text(
         f"APK local: {latest_file}"
@@ -377,6 +397,7 @@ def build_release_screen(page: ft.Page):
                     ),
                 ),
 
+
                 # Nueva versión
                 ft.Column(
                     spacing=10,
@@ -396,8 +417,11 @@ def build_release_screen(page: ft.Page):
                                 patch_field,
                             ],
                         ),
+
+                        tipo_actualizacion_field,
                     ],
                 ),
+
 
                 create_button,
                 progress_bar,

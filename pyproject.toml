@@ -1,0 +1,33 @@
+
+[project]
+name = "apk-release-manager"
+version = "1.0.0"
+requires-python = ">=3.12"
+authors = [
+    { name = "andres", email = "harold.acuna153@gmail.com" }
+]
+dependencies = [
+    "flet",
+    "supabase",
+    "python-dotenv"
+]
+description = "Aplicación de escritorio para compilar APKs Flutter, versionarlas y publicarlas en Supabase."
+
+[dependency-groups]
+dev = [
+    "flet-cli",
+    "flet-desktop",
+    "flet-web"
+]
+
+[tool.flet.metadata]
+title = "APK Release Manager"
+
+[tool.flet]
+org = "dev.flet"
+company = "andres"
+copyright = "Copyright (C) 2026 by andres"
+product = "APK Release Manager"
+
+[tool.flet.app]
+path = "."
